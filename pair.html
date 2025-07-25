@@ -3,575 +3,536 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TRASHCORE SITE PAIR</title>
+  <title>Trashcore pairing site Dashboard</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
+<style>
     :root {
-      --primary: #00f0ff;
-      --secondary: #ff00e4;
-      --dark: #0a0a14;
-      --darker: #05050c;
-      --light: rgba(255, 255, 255, 0.9);
-      --glass: rgba(20, 20, 40, 0.5);
-      --error: #ff3860;
-      --success: #2ecc71;
+      --primary: linear-gradient(135deg, #FF4500, #228B22);
+      --bg: #D2691E;
+      --glass: rgba(255, 255, 255, 0.05);
+      --text: #ffffff;
+      --muted: #708090;
+      --highlight: #FF1493;
+      --radius: 16px;
+      --blur: 12px;
+      --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --glow: 0 0 15px rgba(0, 212, 255, 0.3);
     }
-    
-    @font-face {
-      font-family: 'Neon';
-      src: url('https://fonts.cdnfonts.com/css/neon-absolute-sans');
-    }
-    
+
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
     }
-    
+
     body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       min-height: 100vh;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      background: var(--darker);
-      font-family: 'Poppins', sans-serif;
-      overflow: hidden;
-      perspective: 1000px;
+      position: relative;
+      overflow-x: hidden;
+      color: var(--text);
+      padding: 80px 20px 120px; /* Space for header and music player */
     }
-    
-    .cyber-grid {
+
+    /* Background with blur effect */
+    .background-image {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: 
-        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
-      z-index: -1;
+      object-fit: cover;
+      z-index: -3;
+      filter: blur(8px) brightness(0.6);
+      transform: scale(1.1);
     }
-    
-    .particles {
+
+    /* Header with logo */
+    .header {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      pointer-events: none;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--glass);
+      backdrop-filter: blur(var(--blur));
+      z-index: 100;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-    
-    .particle {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: var(--primary);
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-img {
+      height: 40px;
+      width: 40px;
       border-radius: 50%;
-      opacity: 0.5;
-      animation: float 15s infinite linear;
+      object-fit: cover;
+      border: 2px solid rgba(0, 212, 255, 0.3);
+      box-shadow: var(--glow);
     }
-    
-    @keyframes float {
-      0% { transform: translateY(0) translateX(0); opacity: 0; }
-      10% { opacity: 0.5; }
-      90% { opacity: 0.5; }
-      100% { transform: translateY(-100vh) translateX(20vw); opacity: 0; }
-    }
-    
-    .cyber-container {
-      width: 380px;
-      background: var(--glass);
-      border-radius: 20px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(0, 240, 255, 0.2);
-      box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.5),
-        inset 0 0 15px rgba(0, 240, 255, 0.2);
-      padding: 30px;
-      transform-style: preserve-3d;
-      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .cyber-container::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: conic-gradient(
-        transparent, 
-        transparent, 
-        transparent, 
-        var(--primary)
-      );
-      animation: rotate 4s linear infinite;
-      z-index: -1;
-    }
-    
-    .cyber-container::after {
-      content: '';
-      position: absolute;
-      inset: 3px;
-      background: var(--glass);
-      border-radius: 18px;
-      z-index: -1;
-    }
-    
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    .cyber-header {
-      text-align: center;
-      margin-bottom: 30px;
-      position: relative;
-    }
-    
-    .cyber-title {
-      font-family: 'Neon', sans-serif;
-      font-size: 2.2rem;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: var(--primary);
       -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-      letter-spacing: 2px;
-      margin-bottom: 5px;
+      -webkit-text-fill-color: transparent;
+      text-shadow: var(--glow);
     }
-    
-    .cyber-subtitle {
-      color: var(--light);
+
+    /* Battery indicator */
+    .battery-container {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 50px;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
       font-size: 0.9rem;
-      opacity: 0.8;
-      font-weight: 300;
-      letter-spacing: 0.5px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
-    
-    .input-field {
-      position: relative;
-      margin-bottom: 25px;
+
+    .battery-icon {
+      color: var(--highlight);
+      font-size: 1.2rem;
     }
-    
-    .input-field input {
+
+    /* Main container */
+    .main-content {
       width: 100%;
-      padding: 15px 20px;
-      background: rgba(10, 10, 20, 0.7);
-      border: 1px solid rgba(0, 240, 255, 0.3);
-      border-radius: 10px;
-      color: var(--light);
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 0 0px rgba(0, 240, 255, 0);
-    }
-    
-    .input-field input:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.2);
-    }
-    
-    .input-field label {
-      position: absolute;
-      top: 15px;
-      left: 20px;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 1rem;
-      pointer-events: none;
-      transition: all 0.3s ease;
-    }
-    
-    .input-field input:focus + label,
-    .input-field input:not(:placeholder-shown) + label {
-      top: -10px;
-      left: 15px;
-      font-size: 0.8rem;
-      background: var(--darker);
-      padding: 0 5px;
-      color: var(--primary);
-    }
-    
-    .cyber-btn {
-      width: 100%;
-      padding: 15px;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      border: none;
-      border-radius: 10px;
-      color: var(--dark);
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
       position: relative;
-      overflow: hidden;
       z-index: 1;
     }
-    
-    .cyber-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, var(--secondary), var(--primary));
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: -1;
+
+    /* Pairing box */
+    .box {
+      background: var(--glass);
+      backdrop-filter: blur(var(--blur));
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: var(--transition);
     }
-    
-    .cyber-btn:hover::before {
-      opacity: 1;
+
+    .box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), var(--glow);
     }
-    
-    .cyber-btn:active {
-      transform: scale(0.98);
+
+    .box h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      background: var(--primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: var(--glow);
     }
-    
-    .result-container {
-      margin-top: 25px;
-      padding: 20px;
-      background: rgba(10, 10, 20, 0.7);
-      border-radius: 10px;
-      border: 1px solid rgba(0, 240, 255, 0.2);
-      display: none;
-      animation: fadeIn 0.5s ease;
+
+    .box h5 {
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      font-weight: normal;
     }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .result-title {
-      color: var(--primary);
-      font-size: 0.9rem;
-      margin-bottom: 10px;
+
+    /* Input styling */
+    .input-container {
       display: flex;
-      align-items: center;
-      gap: 8px;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
     }
-    
-    .result-code {
-      font-family: 'Courier New', monospace;
-      font-size: 1.2rem;
-      color: var(--light);
+
+    .input-container input {
+      flex: 1;
+      padding: 1rem;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       background: rgba(0, 0, 0, 0.3);
-      padding: 10px 15px;
-      border-radius: 5px;
-      margin: 15px 0;
-      display: inline-block;
-      border-left: 3px solid var(--primary);
+      color: var(--text);
+      font-family: inherit;
+      transition: var(--transition);
     }
-    
-    .copy-btn {
-      background: transparent;
-      border: 1px solid var(--primary);
-      color: var(--primary);
-      padding: 10px 20px;
-      border-radius: 8px;
+
+    .input-container input:focus {
+      outline: none;
+      border-color: var(--highlight);
+      box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+    }
+
+    .input-container button {
+      padding: 1rem 1.5rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: var(--transition);
+    }
+
+    .input-container button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Result display */
+    #pair-result {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: var(--radius);
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      min-height: 60px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin: 0 auto;
+      justify-content: center;
     }
-    
-    .copy-btn:hover {
-      background: rgba(0, 240, 255, 0.1);
-    }
-    
-    .copy-btn.copied {
-      background: var(--success);
-      border-color: var(--success);
+
+    #copy-code {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--highlight);
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
       color: white;
-    }
-    
-    .loading {
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+      margin-top: 1rem;
       display: none;
-      text-align: center;
-      margin: 20px 0;
     }
-    
-    .cyber-spinner {
+
+    #copy-code:hover {
+      background: rgba(0, 212, 255, 0.1);
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+    }
+
+    /* Music player - Positioned below pairing container */
+    .music-player {
+      width: 100%;
+      max-width: 500px;
+      background: var(--glass);
+      backdrop-filter: blur(var(--blur));
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 90;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .music-player h3 {
+      color: var(--highlight);
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    .music-title {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .music-subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .play-btn {
+      background: var(--primary);
+      border: none;
+      border-radius: 50%;
       width: 50px;
       height: 50px;
-      border: 3px solid transparent;
-      border-top-color: var(--primary);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin: 0 auto;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: var(--transition);
     }
-    
-    .cyber-spinner::before,
-    .cyber-spinner::after {
-      content: '';
-      position: absolute;
-      border-radius: 50%;
-      border: 3px solid transparent;
+
+    .play-btn:hover {
+      transform: scale(1.1);
     }
-    
-    .cyber-spinner::before {
-      top: 5px;
-      left: 5px;
-      right: 5px;
-      bottom: 5px;
-      border-top-color: var(--secondary);
-      animation: spin 2s linear infinite;
+
+    .play-btn i {
+      color: white;
+      font-size: 1.5rem;
     }
-    
-    .cyber-spinner::after {
-      top: 15px;
-      left: 15px;
-      right: 15px;
-      bottom: 15px;
-      border-top-color: var(--primary);
-      animation: spin 3s linear infinite;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    .error-message {
-      color: var(--error);
+
+    .time-display {
+      margin-top: 1rem;
       font-size: 0.9rem;
-      margin-top: 5px;
-      display: none;
+      color: var(--muted);
     }
-    
-    .holographic {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        135deg,
-        rgba(0, 240, 255, 0.05) 0%,
-        rgba(255, 0, 228, 0.05) 100%
-      );
-      pointer-events: none;
-      z-index: -1;
-    }
-   
-    @media (max-width: 480px) {
-      .cyber-container {
-        width: 90%;
-        padding: 20px;
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .header {
+        padding: 0.8rem 1rem;
       }
       
-      .cyber-title {
-        font-size: 1.8rem;
+      .logo-text {
+        font-size: 1.2rem;
       }
-    }
-    
-    .scanlines {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 240, 255, 0.03) 1px,
-        transparent 1px
-      );
-      background-size: 100% 2px;
-      pointer-events: none;
-      z-index: 100;
-      animation: scanline 8s linear infinite;
-    }
-    
-    @keyframes scanline {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-100vh); }
+      
+      body {
+        padding: 70px 15px 100px;
+      }
+      
+      .input-container {
+        flex-direction: column;
+      }
+      
+      .input-container button {
+        width: 100%;
+      }
+      
+      .music-player {
+        padding: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="cyber-grid"></div>
-  <div class="scanlines"></div>
-  <div class="holographic"></div>
-  
-  <div class="cyber-container" id="container">
-    <div class="cyber-header">
-      <h1 class="cyber-title">TRASHCORE-PAIRING</h1>
-      <p class="cyber-subtitle">Enter your WhatsApp number with country code</p>
+  <!-- Blurred Background Image -->
+  <img src="https://url.bwmxmd.online/Adams.twcferrg.jpg" alt="Trashcore bot Background" class="background-image">
+
+  <!-- Header with Logo -->
+  <header class="header">
+    <div class="logo-container">
+      <img src="https://url.bwmxmd.online/Adams.twcferrg.jpg" alt="Trashcore bot Logo" class="logo-img">
+      <div class="logo-text">𝐒𝐢𝐧𝐜𝐞-𝟐𝟎𝟐𝟑</div>
     </div>
     
-    <div class="input-field">
-      <input type="number" id="number" placeholder=" " autocomplete="off">
-      <label for="number">254xxx</label>
-      <div class="error-message" id="error">Invalid number format</div>
+    <!-- Battery Indicator -->
+    <div class="battery-container">
+      <i class="fas fa-battery-full battery-icon" id="battery-icon"></i>
+      <span id="battery-level">--%</span>
     </div>
-    
-    <button class="cyber-btn" id="submit">
-      <span id="btn-text">REQUEST CODE</span>
-    </button>
-    
-    <div class="loading" id="loading">
-      <div class="cyber-spinner"></div>
-      <p style="color: var(--primary); margin-top: 15px;">CREATING YOUR CODE</p>
-    </div>
-    
-    <div class="result-container" id="result">
-      <div class="result-title">
-        <i class="fas fa-key"></i>
-        <span>DONE PROCESS</span>
+  </header>
+
+  <!-- Main Content Container -->
+  <div class="main-content">
+    <!-- Pairing Box -->
+    <div class="box">
+      <h2>PAIRING CODE</h2>
+      <h5>TRASHCORE BOTS </h5>
+      <p>Please enter your number without country code</p>
+      
+      <div class="input-container">
+        <input type="number" id="number" placeholder="put you number" required>
+        <button id="submit">REQUEST CODE</button>
       </div>
-      <div class="result-code" id="generated-code">XXXX-XXXX-XXXX</div>
-      <button class="copy-btn" id="copy-btn">
-        <i class="far fa-copy"></i>
-        <span id="btn-text">COPY CODE</span>
+      
+      <div id="pair-result">
+        <p id="waiting-message" style="display: none;">Please wait...</p>
+      </div>
+      
+      <button id="copy-code" onclick="copyCode()">COPY YOUR CODE</button>
+    </div>
+
+    <!-- Music Player - Positioned below pairing container -->
+    <div class="music-player">
+      <h3>PLAY NOW</h3>
+      <div class="music-title">PLAY SONG</div>
+      <div class="music-subtitle">by Trashcore devs</div>
+      <button class="play-btn" onclick="togglePlay()">
+        <i class="fas fa-pause" id="play-icon"></i>
       </button>
+      <div class="time-display" id="time1">0:00</div>
+      <div class="music-subtitle">Dyana cods</div>
+      <audio id="audio1" src="https://url.bwmxmd.online/Adams.twcferrg.jpg" loop></audio>
     </div>
   </div>
-  
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const particlesContainer = document.createElement('div');
-      particlesContainer.className = 'particles';
-      document.body.appendChild(particlesContainer);
+    // DOM elements
+    const pairResult = document.getElementById("pair-result");
+    const submitBtn = document.getElementById("submit");
+    const numberInput = document.getElementById("number");
+    const copyCodeBtn = document.getElementById("copy-code");
+    const waitingMessage = document.getElementById("waiting-message");
+    const batteryLevel = document.getElementById("battery-level");
+    const batteryIcon = document.getElementById("battery-icon");
+
+    // Copy code function
+    async function copyCode() {
+      const code = pairResult.innerText.replace('CODE: ', '');
+      try {
+        await navigator.clipboard.writeText(code);
+        copyCodeBtn.innerText = "COPIED!";
+        copyCodeBtn.style.backgroundColor = "#00ff00";
+        copyCodeBtn.style.color = "#000";
+        setTimeout(() => {
+          copyCodeBtn.innerText = "COPY CODE";
+          copyCodeBtn.style.backgroundColor = "";
+          copyCodeBtn.style.color = "";
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy: ', err);
+      }
+    }
+
+    // Submit handler
+    submitBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
       
-      for (let i = 0; i < 50; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = `${Math.random() * 100}vw`;
-        particle.style.top = `${Math.random() * 100}vh`;
-        particle.style.width = `${Math.random() * 3 + 1}px`;
-        particle.style.height = particle.style.width;
-        particle.style.animationDelay = `${Math.random() * 15}s`;
-        particlesContainer.appendChild(particle);
+      if (!numberInput.value) {
+        pairResult.innerHTML = '<p style="color:var(--highlight)">Enter your WhatsApp number without Country Code</p>';
+        return;
       }
       
-      const container = document.getElementById('container');
-      const numberInput = document.getElementById('number');
-      const submitBtn = document.getElementById('submit');
-      const loading = document.getElementById('loading');
-      const result = document.getElementById('result');
-      const codeDisplay = document.getElementById('generated-code');
-      const copyBtn = document.getElementById('copy-btn');
-      const errorMsg = document.getElementById('error');
+      const cleanNumber = numberInput.value.replace(/[^0-9]/g, "");
       
-      container.addEventListener('mousemove', (e) => {
-        const x = e.clientX - container.getBoundingClientRect().left;
-        const y = e.clientY - container.getBoundingClientRect().top;
-        
-        const centerX = container.offsetWidth / 2;
-        const centerY = container.offsetHeight / 2;
-        
-        const angleX = (y - centerY) / 20;
-        const angleY = (centerX - x) / 20;
-        
-        container.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg)`;
-      });
+      if (cleanNumber.length < 11) {
+        pairResult.innerHTML = '<p style="color:#ff5555">Invalid Number</p>';
+        return;
+      }
       
-      container.addEventListener('mouseleave', () => {
-        container.style.transform = 'rotateX(0) rotateY(0)';
-      });
-      
-      numberInput.addEventListener('input', () => {
-        if (numberInput.value.length > 0 && numberInput.value.length < 6) {
-          errorMsg.style.display = 'block';
-        } else {
-          errorMsg.style.display = 'none';
+      // Format number display
+      let formattedNumber = "";
+      const digits = cleanNumber.split('');
+      digits.forEach((digit, index) => {
+        formattedNumber += digit;
+        if (index === 2 || index === 7) {
+          formattedNumber += " ";
         }
       });
       
-      submitBtn.addEventListener('click', async () => {
-        const number = numberInput.value.trim();
+      numberInput.type = "text";
+      numberInput.value = "+" + formattedNumber;
+      numberInput.style.color = "var(--highlight)";
+      
+      waitingMessage.style.display = "block";
+      pairResult.innerHTML = "";
+      copyCodeBtn.style.display = "none";
+      
+      try {
+        const { data } = await axios(`/code?number=${cleanNumber}`);
+        const code = data.code || "Service Unavailable";
         
-        if (!number) {
-          errorMsg.textContent = 'Please enter your WhatsApp number';
-          errorMsg.style.display = 'block';
-          return;
-        }
-        
-        if (number.length < 6) {
-          errorMsg.textContent = 'Invalid number format';
-          errorMsg.style.display = 'block';
-          return;
-        }
-        
-        loading.style.display = 'block';
-        result.style.display = 'none';
-        submitBtn.disabled = true;
-        
+        pairResult.innerHTML = `
+          <p style="color:var(--highlight); font-weight:bold; font-size:1.2rem;">
+            CODE: <span style="color:white">${code}</span>
+          </p>
+        `;
+        copyCodeBtn.style.display = "inline-block";
+        waitingMessage.style.display = "none";
+      } catch (error) {
+        pairResult.innerHTML = '<p style="color:#ff5555">Error getting pairing code</p>';
+        waitingMessage.style.display = "none";
+      }
+    });
+
+    // Music player controls
+    const audio = document.getElementById('audio1');
+    const playBtn = document.querySelector('.play-btn');
+    const playIcon = document.getElementById('play-icon');
+    const timeDisplay = document.getElementById('time1');
+    
+    // Auto-play music when page loads (with user interaction)
+    document.addEventListener('click', function initAudio() {
+      audio.play().then(() => {
+        playIcon.classList.replace('fa-play', 'fa-pause');
+        updateTimeDisplay();
+      }).catch(error => {
+        console.log('Auto-play prevented:', error);
+      });
+      document.removeEventListener('click', initAudio);
+    }, { once: true });
+
+    function togglePlay() {
+      if (audio.paused) {
+        audio.play();
+        playIcon.classList.replace('fa-play', 'fa-pause');
+      } else {
+        audio.pause();
+        playIcon.classList.replace('fa-pause', 'fa-play');
+      }
+    }
+
+    function updateTimeDisplay() {
+      const minutes = Math.floor(audio.currentTime / 60);
+      const seconds = Math.floor(audio.currentTime % 60);
+      timeDisplay.textContent = `${minutes}:${String(seconds).padStart(2, '0')}`;
+      
+      if (!audio.paused) {
+        requestAnimationFrame(updateTimeDisplay);
+      }
+    }
+
+    audio.addEventListener('timeupdate', updateTimeDisplay);
+
+    // Battery status indicator
+    async function updateBattery() {
+      if (navigator.getBattery) {
         try {
-           const response = await axios.get(`/code?number=${number}`);
-          const code = response.data.code || "SERVICE_UNAVAILABLE";
+          const battery = await navigator.getBattery();
           
-          codeDisplay.textContent = code;
-          loading.style.display = 'none';
-          result.style.display = 'block';
+          const updateBatteryUI = () => {
+            const batteryPercent = Math.round(battery.level * 100);
+            batteryLevel.textContent = `${batteryPercent}%`;
+            
+            // Update battery icon based on level
+            let iconClass = 'fa-battery-empty';
+            if (batteryPercent > 80) iconClass = 'fa-battery-full';
+            else if (batteryPercent > 60) iconClass = 'fa-battery-three-quarters';
+            else if (batteryPercent > 40) iconClass = 'fa-battery-half';
+            else if (batteryPercent > 20) iconClass = 'fa-battery-quarter';
+            
+            // Add charging bolt if charging
+            if (battery.charging) {
+              batteryIcon.className = `fas fa-bolt ${iconClass}`;
+              batteryIcon.style.color = '#00ff00';
+            } else {
+              batteryIcon.className = `fas ${iconClass}`;
+              batteryIcon.style.color = 'var(--highlight)';
+            }
+          };
           
+          battery.addEventListener('levelchange', updateBatteryUI);
+          battery.addEventListener('chargingchange', updateBatteryUI);
+          updateBatteryUI();
         } catch (error) {
-          loading.style.display = 'none';
-          errorMsg.textContent = 'Something went wrong. Try again.';
-          errorMsg.style.display = 'block';
-        } finally {
-          submitBtn.disabled = false;
+          console.error('Battery API error:', error);
         }
-      });
+      } else {
+        batteryLevel.textContent = "N/A";
+      }
+    }
+
+    // Initialize
+    window.addEventListener('load', () => {
+      copyCodeBtn.style.display = "none";
+      updateBattery();
       
-      copyBtn.addEventListener('click', async () => {
-        try {
-          const code = codeDisplay.textContent;
-          
-          if (!navigator.clipboard) {
-            throw new Error("Clipboard API not available");
-          }
-          
-          await navigator.clipboard.writeText(code);
-          
-          const icon = copyBtn.querySelector('i');
-          const text = copyBtn.querySelector('span');
-          
-          icon.classList.remove('fa-copy');
-          icon.classList.add('fa-check');
-          text.textContent = 'COPIED!';
-          copyBtn.classList.add('copied');
-         
-          setTimeout(() => {
-            icon.classList.remove('fa-check');
-            icon.classList.add('fa-copy');
-            text.textContent = 'COPY CODE';
-            copyBtn.classList.remove('copied');
-          }, 2000);
-          
-        } catch (err) {
-          console.error('Failed to copy:', err);
-          const textArea = document.createElement('textarea');
-          textArea.value = codeDisplay.textContent;
-          document.body.appendChild(textArea);
-          textArea.select();
-          
-          try {
-            document.execCommand('copy');
-            copyBtn.innerHTML = '<i class="fas fa-check"></i><span>COPIED!</span>';
-            copyBtn.classList.add('copied');
-            setTimeout(() => {
-              copyBtn.innerHTML = '<i class="far fa-copy"></i><span>COPY CODE</span>';
-              copyBtn.classList.remove('copied');
-            }, 2000);
-          } catch (err) {
-            alert('Failed to copy code. Please copy manually.');
-          }
-          document.body.removeChild(textArea);
-        }
-      });
+      // Smooth page load
+      document.body.style.opacity = '0';
+      setTimeout(() => {
+        document.body.style.transition = 'opacity 0.5s ease';
+        document.body.style.opacity = '1';
+      }, 100);
     });
   </script>
 </body>
-</html>
+  </html>
