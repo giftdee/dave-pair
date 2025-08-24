@@ -8,7 +8,7 @@ const fs = require('fs');
 let router = express.Router()
 const pino = require("pino");
 const {
-        default: VENOM_XMD,
+        default: Mbuvi_Tech,
         useMultiFileAuthState,
         jidNormalizedUser,
         Browsers,
@@ -28,13 +28,13 @@ const {
 } = require("node:fs/promises")
 router.get('/', async (req, res) => {
         const id = makeid();
-        async function VENOM_MD_QR_CODE() {
+        async function MBUVI_MD_QR_CODE() {
                 const {
                         state,
                         saveCreds
                 } = await useMultiFileAuthState('./temp/' + id)
                 try {
-                        let Qr_Code_By_VENOM_XMD = VENOM_XMD({
+                        let Qr_Code_By_Mbuvi_Tech = Mbuvi_Tech({
                                 auth: state,
                                 printQRInTerminal: false,
                                 logger: pino({
@@ -43,8 +43,8 @@ router.get('/', async (req, res) => {
                                 browser: Browsers.macOS("Desktop"),
                         });
 
-                        Qr_Code_By_VENOM_XMD.ev.on('creds.update', saveCreds)
-                        Qr_Code_By_VENOM_XMD.ev.on("connection.update", async (s) => {
+                        Qr_Code_By_Mbuvi_Tech.ev.on('creds.update', saveCreds)
+                        Qr_Code_By_Mbuvi_Tech.ev.on("connection.update", async (s) => {
                                 const {
                                         connection,
                                         lastDisconnect,
@@ -56,9 +56,9 @@ router.get('/', async (req, res) => {
                                         let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
                                         await delay(800);
                                    let b64data = Buffer.from(data).toString('base64');
-                                   let session = await Qr_Code_By_VENOM_XMD.sendMessage(Qr_Code_By_VENOM_XMD.user.id, { text: 'VENOM~' + b64data });
+                                   let session = await Qr_Code_By_Mbuvi_Tech.sendMessage(Qr_Code_By_Mbuvi_Tech.user.id, { text: 'DAVE-XMD-WHATSAPP-BOT;;;=>' + b64data });
 
-                                   let VENOM_MD_TEXT = `
+                                   let MBUVI_MD_TEXT = `
 ╔════════════════════◇
 ║『 SESSION CONNECTED』
 ║ ✨ VENOM-XMD 🔷
@@ -90,4 +90,28 @@ router.get('/', async (req, res) => {
 
 Don't Forget To Give Star ⭐ To My Repo
 ______________________________`;
-         await Qr_Code_By_VENOM_XMD.sendMessage(Qr_Code_By_VENOM_XMD.user.id,{text:VENOM_MD_TEXT},{quoted:session})
+                  await Qr_Code_By_Mbuvi_Tech.sendMessage(Qr_Code_By_Mbuvi_Tech.user.id,{text:MBUVI_MD_TEXT},{quoted:session})
+
+
+
+                                        await delay(100);
+                                        await Qr_Code_By_Mbuvi_Tech.ws.close();
+                                        return await removeFile("temp/" + id);
+                                } else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
+                                        await delay(10000);
+                                        MBUVI_MD_QR_CODE();
+                                }
+                        });
+                } catch (err) {
+                        if (!res.headersSent) {
+                                await res.json({
+                                        code: "Service is Currently Unavailable"
+                                });
+                        }
+                        console.log(err);
+                        await removeFile("temp/" + id);
+                }
+        }
+        return await MBUVI_MD_QR_CODE()
+});
+module.exports = router
