@@ -6,7 +6,7 @@ const fs = require('fs');
 let router = express.Router();
 const pino = require('pino');
 const {
-    default: Mbuvi_Tech,
+    default: VENOM_XMD,
     useMultiFileAuthState,
     delay,
     makeCacheableSignalKeyStore,
@@ -21,11 +21,11 @@ function removeFile(FilePath) {
 router.get('/', async (req, res) => {
     const id = makeid();
     let num = req.query.number;
-    
-    async function Mbuvi_MD_PAIR_CODE() {
+
+    async function VENOM_MD_PAIR_CODE() {
         const { state, saveCreds } = await useMultiFileAuthState('./temp/' + id);
         try {
-            let Pair_Code_By_Mbuvi_Tech = Mbuvi_Tech({
+            let Pair_Code_By_VENOM_XMD = VENOM_XMD({
                 auth: {
                     creds: state.creds,
                     keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'fatal' }).child({ level: 'fatal' })),
@@ -35,79 +35,78 @@ router.get('/', async (req, res) => {
                 browser: Browsers.macOS('Chrome')
             });
 
-            if (!Pair_Code_By_Mbuvi_Tech.authState.creds.registered) {
+            if (!Pair_Code_By_VENOM_XMD.authState.creds.registered) {
                 await delay(1500);
                 num = num.replace(/[^0-9]/g, '');
-                const code = await Pair_Code_By_Mbuvi_Tech.requestPairingCode(num);
+                const code = await Pair_Code_By_VENOM_XMD.requestPairingCode(num);
                 if (!res.headersSent) {
                     await res.send({ code });
                 }
             }
 
-            Pair_Code_By_Mbuvi_Tech.ev.on('creds.update', saveCreds);
-            Pair_Code_By_Mbuvi_Tech.ev.on('connection.update', async (s) => {
+            Pair_Code_By_VENOM_XMD.ev.on('creds.update', saveCreds);
+            Pair_Code_By_VENOM_XMD.ev.on('connection.update', async (s) => {
                 const { connection, lastDisconnect } = s;
                 if (connection === 'open') {
                     await delay(5000);
                     let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
                     await delay(800);
                     let b64data = Buffer.from(data).toString('base64');
-                    let session = await Pair_Code_By_Mbuvi_Tech.sendMessage(Pair_Code_By_Mbuvi_Tech.user.id, { text: 'DAVE-XMD-WHATSAPP-BOT;;;=>' + b64data });
+                    let session = await Pair_Code_By_VENOM_XMD.sendMessage(Pair_Code_By_VENOM_XMD.user.id, { text: 'VENOM-XMD-WHATSAPP-BOT;;;=>' + b64data });
 
-                    let Mbuvi_MD_TEXT = `
-        
+                    let VENOM_MD_TEXT = `
 ╔════════════════════◇
 ║『 SESSION CONNECTED』
-║ ✨VolTah-XMD🔷
-║ ✨Giddy Tennor 🔷
+║ ✨ VENOM-XMD 🔷
+║ ✨ Gifted Dave 🔷
 ╚════════════════════╝
-
 
 ---
 
 ╔════════════════════◇
-║『 YOU'VE CHOSEN VolTah XMD 』
-║ -Set the session ID in Heroku:
+║『 YOU'VE CHOSEN VENOM-XMD 』
+║ - Set the session ID in Heroku:
 ║ - SESSION_ID: 
 ╚════════════════════╝
+
 ╔════════════════════◇
-║ 『••• _V𝗶𝘀𝗶𝘁 𝗙𝗼𝗿_H𝗲𝗹𝗽 •••』
-║❍ 𝐘𝐨𝐮𝐭𝐮𝐛𝐞: youtube.com/@giddynokia
-║❍ 𝐎𝐰𝐧𝐞𝐫: 254756182478
-║❍ 𝐑𝐞𝐩𝐨: https://github.com/Tennor-modz/Bellah-Xmd 
-║❍ 𝐖𝐚𝐆𝗿𝐨𝐮𝐩: https://chat.whatsapp.com/CzFlFQrkdzxFw0pxCBYM7H
-║❍ 𝐖𝐚𝐂𝐡𝐚𝐧𝐧𝐞𝐥: https://whatsapp.com/channel/0029VaPZWbY1iUxVVRIIOm0D
-║❍ 𝐈𝐧𝐬𝐭𝐚𝐠𝐫𝐚𝐦: _https://www.instagram.com/giddy_tennor_?igsh=YzZ0NDRoaXFxM2Zk
+║ 『••• VISIT FOR HELP •••』
+║ ❍ YouTube: youtube.com/@davlodavlo19
+║ ❍ Owner: 254104260236
+║ ❍ Repo: https://github.com/giftdee/VENOM-XMD 
+║ ❍ WhatsApp Group: https://chat.whatsapp.com/LfTFxkUQ1H7Eg2D0vR3n6g
+║ ❍ WhatsApp Channel: https://whatsapp.com/channel/0029VbApvFQ2Jl84lhONkc3k
+║ ❍ Instagram: https://www.instagram.com/gifted_dave_
 ║ ☬ ☬ ☬ ☬
 ╚═════════════════════╝
-𒂀 Enjoy VolTah MD
 
+𒂀 Enjoy VENOM-XMD
 
 ---
 
-Don't Forget To Give Star⭐ To My Repo
+Don't Forget To Give Star ⭐ To My Repo
 ______________________________`;
 
-                    await Pair_Code_By_Mbuvi_Tech.sendMessage(Pair_Code_By_Mbuvi_Tech.user.id, { text: Toxic_MD_TEXT }, { quoted: session });
+                    await Pair_Code_By_VENOM_XMD.sendMessage(Pair_Code_By_VENOM_XMD.user.id, { text: VENOM_MD_TEXT }, { quoted: session });
 
                     await delay(100);
-                    await Pair_Code_By_Mbuvi_Tech.ws.close();
+                    await Pair_Code_By_VENOM_XMD.ws.close();
                     return await removeFile('./temp/' + id);
                 } else if (connection === 'close' && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
                     await delay(10000);
-                    Mbuvi_MD_PAIR_CODE();
+                    VENOM_MD_PAIR_CODE();
                 }
             });
         } catch (err) {
-            console.log('Service restarted');
+            console.log('Service restarted:', err.message);
             await removeFile('./temp/' + id);
             if (!res.headersSent) {
                 await res.send({ code: 'Service Currently Unavailable' });
             }
         }
     }
-    
-    return await Mbuvi_MD_PAIR_CODE();
+
+    return await VENOM_MD_PAIR_CODE();
 });
 
 module.exports = router;
