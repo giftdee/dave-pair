@@ -1,9 +1,8 @@
-
 {
-    "name": "Makino",
-    "description": "A whatsApp bot based on Baileysjs linrary (Ts+Js) with Multi Device support",
-    "repository": "https://github.com/anonphoenix007/CH13",
-    "logo": "https://telegra.ph/file/7aa528767ed96ddc17bc2.jpg",
+    "name": "VENOM-XMD",
+    "description": "A whatsApp bot based on Baileysjs library (Ts+Js) with Multi Device support",
+    "repository": "https://github.com/giftdee/VENOM-XMD",
+    "logo": "https://files.catbox.moe/eh7hlm.jpg",
     "keywords": ["nodejs", "bot", "whatsapp bot", "whatsapp automation", "multi device"],
     "buildpacks": [
       {
@@ -16,4 +15,4 @@
       "url": "https://github.com/clhuang/heroku-buildpack-webp-binaries.git"
           }
      ]
-} 
+}
