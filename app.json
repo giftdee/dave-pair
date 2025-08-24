@@ -1,7 +1,7 @@
 {
     "name": "VENOM-XMD",
     "description": "A whatsApp bot based on Baileysjs library (Ts+Js) with Multi Device support",
-    "repository": "https://github.com/giftdee/VENOM-XMD",
+    "repository": "https://github.com/giftdee/dave-pair",
     "logo": "https://files.catbox.moe/eh7hlm.jpg",
     "keywords": ["nodejs", "bot", "whatsapp bot", "whatsapp automation", "multi device"],
     "buildpacks": [
