@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trashcore pairing site Dashboard</title>
+  <title>VENOM-XMD Pairing Site</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
     :root {
@@ -229,7 +229,7 @@
       backdrop-filter: blur(var(--blur));
       border-radius: var(--radius);
       padding: 1.5rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: 极 0 10px 30px rgba(0, 0, 0, 0.4);
       border: 1px solid rgba(255, 255, 255, 0.1);
       z-index: 90;
       text-align: center;
@@ -289,23 +289,23 @@
       .header {
         padding: 0.8rem 1rem;
       }
-      
+
       .logo-text {
         font-size: 1.2rem;
       }
-      
+
       body {
         padding: 70px 15px 100px;
       }
-      
+
       .input-container {
         flex-direction: column;
       }
-      
+
       .input-container button {
         width: 100%;
       }
-      
+
       .music-player {
         padding: 1rem;
       }
@@ -314,15 +314,15 @@
 </head>
 <body>
   <!-- Blurred Background Image -->
-  <img src="https://url.bwmxmd.online/Adams.twcferrg.jpg" alt="Trashcore bot Background" class="background-image">
+  <img src="https://files.catbox.moe/eh7hlm.jpg" alt="VENOM-XMD Background" class="background-image">
 
   <!-- Header with Logo -->
   <header class="header">
     <div class="logo-container">
-      <img src="https://url.bwmxmd.online/Adams.twcferrg.jpg" alt="Trashcore bot Logo" class="logo-img">
+      <img src="https://files.catbox.moe/eh7hlm.jpg" alt="VENOM-XMD Logo" class="logo-img">
       <div class="logo-text">𝐒𝐢𝐧𝐜𝐞-𝟐𝟎𝟐𝟑</div>
     </div>
-    
+
     <!-- Battery Indicator -->
     <div class="battery-container">
       <i class="fas fa-battery-full battery-icon" id="battery-icon"></i>
@@ -335,32 +335,33 @@
     <!-- Pairing Box -->
     <div class="box">
       <h2>PAIRING CODE</h2>
-      <h5>TRASHCORE BOTS </h5>
+      <h5>VENOM-XMD BOTS</h5>
       <p>Please enter your number without country code</p>
-      
+
       <div class="input-container">
-        <input type="number" id="number" placeholder="put you number" required>
+        <input type="number" id="number" placeholder="Enter your number" required>
         <button id="submit">REQUEST CODE</button>
       </div>
-      
+
       <div id="pair-result">
         <p id="waiting-message" style="display: none;">Please wait...</p>
       </div>
-      
+
       <button id="copy-code" onclick="copyCode()">COPY YOUR CODE</button>
     </div>
 
     <!-- Music Player - Positioned below pairing container -->
     <div class="music-player">
       <h3>PLAY NOW</h3>
-      <div class="music-title">PLAY SONG</div>
-      <div class="music-subtitle">by Trashcore devs</div>
+      <div class="music-title">VENOM-XMD THEME</div>
+      <div class="music-subtitle">by Gifted Dave</div>
       <button class="play-btn" onclick="togglePlay()">
-        <i class="fas fa-pause" id="play-icon"></i>
+        <i class="fas fa-play" id="play-icon"></i>
       </button>
       <div class="time-display" id="time1">0:00</div>
-      <div class="music-subtitle">Dyana cods</div>
-      <audio id="audio1" src="https://url.bwmxmd.online/Adams.twcferrg.jpg" loop></audio>
+      <div class="music-subtitle">VENOM-XMD Official</div>
+      <!-- Fixed audio source - using a placeholder audio file -->
+      <audio id="audio1" src="https://assets.codepen.io/572859/DiscoMedley.mp3" loop></audio>
     </div>
   </div>
 
@@ -396,19 +397,19 @@
     // Submit handler
     submitBtn.addEventListener("click", async (e) => {
       e.preventDefault();
-      
+
       if (!numberInput.value) {
         pairResult.innerHTML = '<p style="color:var(--highlight)">Enter your WhatsApp number without Country Code</p>';
         return;
       }
-      
+
       const cleanNumber = numberInput.value.replace(/[^0-9]/g, "");
-      
+
       if (cleanNumber.length < 11) {
         pairResult.innerHTML = '<p style="color:#ff5555">Invalid Number</p>';
         return;
       }
-      
+
       // Format number display
       let formattedNumber = "";
       const digits = cleanNumber.split('');
@@ -418,19 +419,19 @@
           formattedNumber += " ";
         }
       });
-      
+
       numberInput.type = "text";
       numberInput.value = "+" + formattedNumber;
       numberInput.style.color = "var(--highlight)";
-      
+
       waitingMessage.style.display = "block";
       pairResult.innerHTML = "";
       copyCodeBtn.style.display = "none";
-      
+
       try {
         const { data } = await axios(`/code?number=${cleanNumber}`);
         const code = data.code || "Service Unavailable";
-        
+
         pairResult.innerHTML = `
           <p style="color:var(--highlight); font-weight:bold; font-size:1.2rem;">
             CODE: <span style="color:white">${code}</span>
@@ -450,18 +451,29 @@
     const playIcon = document.getElementById('play-icon');
     const timeDisplay = document.getElementById('time1');
     
-    // Auto-play music when page loads (with user interaction)
-    document.addEventListener('click', function initAudio() {
+    let audioInitialized = false;
+
+    // Initialize audio on first user interaction
+    function initAudio() {
+      if (audioInitialized) return;
+      
       audio.play().then(() => {
         playIcon.classList.replace('fa-play', 'fa-pause');
         updateTimeDisplay();
+        audioInitialized = true;
       }).catch(error => {
-        console.log('Auto-play prevented:', error);
+        console.log('Audio play failed:', error);
+        playIcon.classList.replace('fa-pause', 'fa-play');
       });
-      document.removeEventListener('click', initAudio);
-    }, { once: true });
+    }
 
     function togglePlay() {
+      // Initialize audio on first click if needed
+      if (!audioInitialized) {
+        initAudio();
+        return;
+      }
+      
       if (audio.paused) {
         audio.play();
         playIcon.classList.replace('fa-play', 'fa-pause');
@@ -475,31 +487,38 @@
       const minutes = Math.floor(audio.currentTime / 60);
       const seconds = Math.floor(audio.currentTime % 60);
       timeDisplay.textContent = `${minutes}:${String(seconds).padStart(2, '0')}`;
-      
+
       if (!audio.paused) {
         requestAnimationFrame(updateTimeDisplay);
       }
     }
 
     audio.addEventListener('timeupdate', updateTimeDisplay);
+    
+    // Show error if audio fails to load
+    audio.addEventListener('error', function() {
+      console.error('Audio loading error');
+      timeDisplay.textContent = 'Audio not available';
+      playBtn.style.display = 'none';
+    });
 
     // Battery status indicator
     async function updateBattery() {
       if (navigator.getBattery) {
         try {
           const battery = await navigator.getBattery();
-          
+
           const updateBatteryUI = () => {
             const batteryPercent = Math.round(battery.level * 100);
             batteryLevel.textContent = `${batteryPercent}%`;
-            
+
             // Update battery icon based on level
             let iconClass = 'fa-battery-empty';
             if (batteryPercent > 80) iconClass = 'fa-battery-full';
             else if (batteryPercent > 60) iconClass = 'fa-battery-three-quarters';
             else if (batteryPercent > 40) iconClass = 'fa-battery-half';
             else if (batteryPercent > 20) iconClass = 'fa-battery-quarter';
-            
+
             // Add charging bolt if charging
             if (battery.charging) {
               batteryIcon.className = `fas fa-bolt ${iconClass}`;
@@ -509,7 +528,7 @@
               batteryIcon.style.color = 'var(--highlight)';
             }
           };
-          
+
           battery.addEventListener('levelchange', updateBatteryUI);
           battery.addEventListener('chargingchange', updateBatteryUI);
           updateBatteryUI();
@@ -525,14 +544,17 @@
     window.addEventListener('load', () => {
       copyCodeBtn.style.display = "none";
       updateBattery();
-      
+
       // Smooth page load
       document.body.style.opacity = '0';
       setTimeout(() => {
         document.body.style.transition = 'opacity 0.5s ease';
         document.body.style.opacity = '1';
       }, 100);
+      
+      // Initialize audio on any user interaction
+      document.addEventListener('click', initAudio, { once: true });
     });
   </script>
 </body>
-  </html>
+</html>
