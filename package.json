@@ -1,5 +1,5 @@
 {
-    "description": "VolTah-session",
+    "description": "dave-session",
     "main": "./voltah.js",
   "engines" : { 
     "npm" : ">=9.7.2",
@@ -8,7 +8,7 @@
     "scripts": {
     "start": "node voltah.js"
   },
-  "author": "Giddy Tennor",
+  "author": "Gifted dave",
   "license": "GPL-3.0 license",
   "dependencies": {
     "baileys-pro": "latest",
